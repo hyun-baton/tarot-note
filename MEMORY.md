@@ -16,3 +16,9 @@
 **왜 이렇게:** 구현 전에 배포 환경을 먼저 잡아 git push → 자동배포 루프를 만든다.
 **막힌 점:** 기존 Supabase 무료 프로젝트 2개 한도 초과 → 새 계정으로 해결. shadcn base-nova 스타일이 @base-ui/react 등 추가 패키지 필요 — 수동 설치로 해결.
 **라이브:** https://tarot-note.vercel.app (git push → 자동배포 확인됨)
+
+## 구현 (2026-05-30)
+**만든 화면:** 기록 목록(그리드) · 새 기록(카드 선택+폼) · 기록 상세(이미지+리뷰) · 달력(월별 카드 표시) · 카드 도감(78장 강조).
+**카드 이미지:** sacred-texts.com Rider-Waite 덱 URL 사용 (퍼블릭 도메인).
+**핵심 결정:** shadcn base-nova 스타일이 `asChild` prop 미지원 → Link에 직접 Tailwind 클래스 적용.
+**막힌 점:** Supabase 새 계정 로그인 필요(기존 계정 무료 한도 초과). @base-ui/react 등 누락 패키지 수동 설치.
