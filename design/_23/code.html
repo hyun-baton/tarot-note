@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>타로 노트 - 새 기록</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#00174b",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#c3c7cb",
+                    "outline-variant": "#c3c6d7",
+                    "on-secondary-container": "#54647a",
+                    "surface-container-high": "#e2e7ff",
+                    "primary": "#004ac6",
+                    "tertiary-container": "#696e71",
+                    "surface": "#faf8ff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#dfe3e7",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#dbe1ff",
+                    "background": "#faf8ff",
+                    "on-tertiary-container": "#edf1f5",
+                    "on-surface-variant": "#434655",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "surface-container-low": "#f2f3ff",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-container": "#eaedff",
+                    "primary-container": "#2563eb",
+                    "on-surface": "#131b2e",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-background": "#131b2e",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-container": "#d0e1fb",
+                    "surface-dim": "#d2d9f4",
+                    "outline": "#737686",
+                    "surface-bright": "#faf8ff",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#515659",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-variant": "#dae2fd",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary-container": "#eeefff",
+                    "surface-tint": "#0053db",
+                    "inverse-on-surface": "#eef0ff",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#505f76",
+                    "inverse-surface": "#283044",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#43474b",
+                    "on-tertiary-fixed": "#171c1f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "sm": "12px",
+                    "gutter": "24px",
+                    "lg": "48px",
+                    "md": "24px",
+                    "xl": "80px",
+                    "container-max": "1120px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Noto Sans KR"],
+                    "label-md": ["Noto Sans KR"],
+                    "headline-md": ["Noto Sans KR"],
+                    "body-lg": ["Noto Sans KR"],
+                    "display": ["Noto Sans KR"],
+                    "body-md": ["Noto Sans KR"],
+                    "label-sm": ["Noto Sans KR"],
+                    "headline-lg": ["Noto Sans KR"],
+                    "headline-sm": ["Noto Sans KR"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .tarot-card-selected {
+            border: 2px solid #2563eb !important;
+            background-color: #eff6ff !important;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface border-b border-outline-variant top-0 z-50 h-[64px] sticky">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-gutter h-full">
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">타로 노트</div>
+<nav class="hidden md:flex gap-md h-full items-center">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="#">기록하기</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 transition-colors duration-200" href="#">모아보기</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 transition-colors duration-200" href="#">통계</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 transition-colors duration-200" href="#">설정</a>
+</nav>
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80 transition-opacity">account_circle</span>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-gutter py-md">
+<div class="max-w-2xl mx-auto space-y-md">
+<!-- Hero Title -->
+<div class="text-center md:text-left">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">오늘의 기록</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">여러 장의 카드를 선택하여 상세한 해석을 남겨보세요.</p>
+</div>
+<!-- Multi-Card Selection Section -->
+<section class="space-y-sm"><div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface-variant">카드 선택</label>
+<div class="flex gap-base">
+<div class="relative flex-grow">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full border border-outline-variant rounded-xl py-base pl-10 pr-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all bg-surface-container-lowest outline-none" id="cardSearch" placeholder="타로 카드 이름을 입력하세요 (예: 바보, 마법사)" type="text"/>
+</div>
+<button class="px-gutter bg-primary text-on-primary rounded-xl font-label-md hover:bg-primary-container transition-colors" id="searchBtn">검색</button>
+</div>
+<div class="flex flex-wrap gap-base pt-xs" id="searchResultContainer">
+<div class="flex-shrink-0 w-24 aspect-[2/3] bg-white border-2 border-primary bg-primary/5 rounded-xl cursor-pointer text-center relative overflow-hidden">
+<img alt="바보" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujJBlazrid2UltT7E7KqO9X21Kw1893mQI_rIQ4B9XPaUT_ajiU15aYVru7BBu8kss2kDTcOBa5ucrpalMo3Dy-FdMUvVrrpeQLqHUfW0vkdnb9FfRCKVZk9XSlE1gQtJDm9PH9tvykXxgMYcQsB99S95BQAwn9EZWys4_1kNdzD3UV0rR-TavW9Xwrc3qcah3rbJ3_So0fyIDMPNcAVN1yspgZFj6o6l_A6NOJxBlc8HOrdZmwcMr53rLz"/>
+<div class="absolute bottom-0 left-0 right-0 bg-black/40 py-0.5">
+<span class="font-label-sm text-label-sm text-white">바보</span>
+</div>
+<span class="absolute top-1 right-1 material-symbols-outlined text-primary bg-white rounded-full text-base">check_circle</span>
+</div>
+<div class="flex-shrink-0 w-24 aspect-[2/3] bg-white border border-outline-variant rounded-xl cursor-pointer hover:shadow-md text-center relative overflow-hidden">
+<img alt="마법사" class="w-full h-full object-cover grayscale" src="https://lh3.googleusercontent.com/aida/ADBb0uhcGT5P9pN7ZeZUmZjs5atGf_3tXhNq8OSZRI-8rbsyjcnnk6ufTLqwxyO_775qi-TAdBiDFHWduL3kA7DvQyVEqF1WeTTiveC-ieyKuXiMt9bu_4vK60rVspEQdwmide1gMkZDaFrc5f6hU2x0x_5SClMs0xEns3EkEoSi0wqlcCpxV6b9j9DTdehKmCcQMr9D_NPzCF0abiYNO70oCedoVetvs23dopfvbq59Kiw0seDVPIHh-pCF0BhC"/>
+<div class="absolute bottom-0 left-0 right-0 bg-black/40 py-0.5">
+<span class="font-label-sm text-label-sm text-white">마법사</span>
+</div>
+</div>
+</div>
+</div></section>
+<!-- Form Fields -->
+<form class="space-y-gutter bg-white border border-outline-variant rounded-xl p-md shadow-sm" id="recordForm">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant block" for="date">날짜</label>
+<div class="relative">
+<input class="w-full border border-outline-variant rounded-xl py-base px-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all bg-surface-container-lowest appearance-none outline-none" id="date" name="date" type="date"/>
+<span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">calendar_today</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant block" for="question">오늘의 질문 또는 상황</label>
+<textarea class="w-full border border-outline-variant rounded-xl py-base px-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all bg-surface-container-lowest resize-none outline-none" id="question" name="question" placeholder="어떤 고민이 있으신가요?" rows="3"></textarea>
+</div><div class="space-y-md border-t border-b border-surface-container py-md" id="perCardInterprets">
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-wider">카드별 해석</h3>
+<div class="space-y-md" id="dynamicInterpretFields"><div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant block">[바보] 해석</label>
+<textarea class="w-full border border-outline-variant rounded-xl py-base px-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all bg-surface-container-lowest resize-none outline-none" placeholder="바보 카드의 의미를 적어주세요." rows="2"></textarea>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant block">[마법사] 해석</label>
+<textarea class="w-full border border-outline-variant rounded-xl py-base px-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all bg-surface-container-lowest resize-none outline-none" placeholder="마법사 카드의 의미를 적어주세요." rows="2"></textarea>
+</div></div>
+</div>
+<!-- Per-Card Interpretation Group -->
+<!-- Total Interpretation -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant block" for="totalMemo">종합 해석</label>
+<textarea class="w-full border border-outline-variant rounded-xl py-base px-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all bg-surface-container-lowest resize-none outline-none" id="totalMemo" name="totalMemo" placeholder="선택한 카드들을 종합하여 전체적인 메시지를 기록해 보세요." rows="6"></textarea>
+</div>
+<!-- Primary Action Button -->
+<button class="w-full bg-primary-container text-on-primary font-headline-sm text-headline-sm py-base rounded-xl hover:shadow-lg active:scale-[0.98] transition-all flex justify-center items-center gap-xs" type="submit">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">save</span>
+                저장하기
+            </button>
+</form>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface border-t border-outline-variant w-full py-lg mt-auto">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter flex flex-col md:flex-row justify-between items-center gap-base">
+<div class="font-label-sm text-label-sm text-on-surface-variant">© 2024 타로 노트. Reflective Clarity for Mindful Living.</div>
+<div class="flex gap-md">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">개인정보처리방침</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">이용약관</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">피드백 보내기</a>
+</div>
+</div>
+</footer>
+<script>
+    // Set default date to today
+    document.getElementById('date').valueAsDate = new Date();
+
+    const selectedCards = new Map(); // Store cardId -> cardName
+
+    function toggleCard(element) {
+        const cardId = element.getAttribute('data-card-id');
+        const cardName = element.getAttribute('data-card-name');
+        const img = element.querySelector('img');
+        const checkIcon = element.querySelector('.check-icon');
+
+        if (selectedCards.has(cardId)) {
+            // Deselect
+            selectedCards.delete(cardId);
+            element.classList.remove('tarot-card-selected');
+            img.classList.add('grayscale');
+            checkIcon.classList.remove('scale-100');
+            checkIcon.classList.add('scale-0');
+        } else {
+            // Select
+            selectedCards.set(cardId, cardName);
+            element.classList.add('tarot-card-selected');
+            img.classList.remove('grayscale');
+            checkIcon.classList.add('scale-100');
+            checkIcon.classList.remove('scale-0');
+        }
+
+        updateSelectionUI();
+    }
+
+    function updateSelectionUI() {
+        const summary = document.getElementById('selectionSummary');
+        const count = selectedCards.size;
+        summary.textContent = `${count}장의 카드가 선택되었습니다`;
+
+        const perCardSection = document.getElementById('perCardInterprets');
+        const dynamicContainer = document.getElementById('dynamicInterpretFields');
+        
+        if (count > 0) {
+            perCardSection.classList.remove('hidden');
+            
+            // Sync fields without losing existing input content if possible
+            const existingFields = Array.from(dynamicContainer.querySelectorAll('[data-interpret-id]'));
+            const existingIds = existingFields.map(f => f.getAttribute('data-interpret-id'));
+            
+            // Remove unselected
+            existingFields.forEach(field => {
+                const id = field.getAttribute('data-interpret-id');
+                if (!selectedCards.has(id)) {
+                    field.remove();
+                }
+            });
+
+            // Add new selected
+            selectedCards.forEach((name, id) => {
+                if (!existingIds.includes(id)) {
+                    const fieldDiv = document.createElement('div');
+                    fieldDiv.className = 'space-y-xs';
+                    fieldDiv.setAttribute('data-interpret-id', id);
+                    fieldDiv.innerHTML = `
+                        <label class="font-label-md text-label-md text-on-surface-variant block">[${name}] 해석</label>
+                        <textarea class="w-full border border-outline-variant rounded-xl py-base px-sm focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all bg-surface-container-lowest resize-none outline-none" placeholder="${name} 카드의 의미를 적어주세요." rows="2"></textarea>
+                    `;
+                    dynamicContainer.appendChild(fieldDiv);
+                }
+            });
+        } else {
+            perCardSection.classList.add('hidden');
+            dynamicContainer.innerHTML = '';
+        }
+    }
+
+    // Form Submit Interaction
+    document.getElementById('recordForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (selectedCards.size === 0) {
+            alert('최소 한 장 이상의 카드를 선택해주세요.');
+            return;
+        }
+
+        const btn = e.target.querySelector('button');
+        const originalContent = btn.innerHTML;
+        
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> 저장 중...';
+        btn.disabled = true;
+
+        setTimeout(() => {
+            btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> 저장 완료';
+            btn.classList.replace('bg-primary-container', 'bg-tertiary');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.classList.replace('bg-tertiary', 'bg-primary-container');
+                btn.disabled = false;
+            }, 2000);
+        }, 1000);
+    });
+</script>
+</body></html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .tarot-card-aspect {
+            aspect-ratio: 2 / 3;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#00174b",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#c3c7cb",
+                      "outline-variant": "#c3c6d7",
+                      "on-secondary-container": "#54647a",
+                      "surface-container-high": "#e2e7ff",
+                      "primary": "#004ac6",
+                      "tertiary-container": "#696e71",
+                      "surface": "#faf8ff",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#dfe3e7",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#dbe1ff",
+                      "background": "#faf8ff",
+                      "on-tertiary-container": "#edf1f5",
+                      "on-surface-variant": "#434655",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#0b1c30",
+                      "surface-container-low": "#f2f3ff",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "surface-container": "#eaedff",
+                      "primary-container": "#2563eb",
+                      "on-surface": "#131b2e",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-background": "#131b2e",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "secondary-container": "#d0e1fb",
+                      "surface-dim": "#d2d9f4",
+                      "outline": "#737686",
+                      "surface-bright": "#faf8ff",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "tertiary": "#515659",
+                      "surface-container-highest": "#dae2fd",
+                      "surface-variant": "#dae2fd",
+                      "inverse-primary": "#b4c5ff",
+                      "on-primary-container": "#eeefff",
+                      "surface-tint": "#0053db",
+                      "inverse-on-surface": "#eef0ff",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#505f76",
+                      "inverse-surface": "#283044",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "on-tertiary-fixed-variant": "#43474b",
+                      "on-tertiary-fixed": "#171c1f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "sm": "12px",
+                      "gutter": "24px",
+                      "lg": "48px",
+                      "md": "24px",
+                      "xl": "80px",
+                      "container-max": "1120px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Noto Sans KR"],
+                      "label-md": ["Noto Sans KR"],
+                      "headline-md": ["Noto Sans KR"],
+                      "body-lg": ["Noto Sans KR"],
+                      "display": ["Noto Sans KR"],
+                      "body-md": ["Noto Sans KR"],
+                      "label-sm": ["Noto Sans KR"],
+                      "headline-lg": ["Noto Sans KR"],
+                      "headline-sm": ["Noto Sans KR"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "display": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline docked full-width top-0 z-50 fixed w-full">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-gutter h-[64px]">
+<div class="flex items-center gap-md">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-on-surface">타로 노트</span>
+<nav class="hidden md:flex items-center gap-md ml-lg">
+<a class="font-label-md text-label-md text-primary dark:text-inverse-primary border-b-2 border-primary dark:border-inverse-primary pb-1 transition-colors duration-200" href="#">기록하기</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary pb-1 transition-colors duration-200" href="#">모아보기</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary pb-1 transition-colors duration-200" href="#">통계</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary pb-1 transition-colors duration-200" href="#">설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<button class="bg-primary text-on-primary px-sm py-xs rounded-xl flex items-center gap-xs font-label-md text-label-md active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>새 기록</span>
+</button>
+<button class="text-primary dark:text-inverse-primary p-xs active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[24px]">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-[88px] pb-xl px-margin-mobile md:px-gutter w-full max-w-container-max mx-auto">
+<!-- Header Section -->
+<div class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-base">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">나의 성찰 기록</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">카드를 통해 마음의 울림을 기록해보세요.</p>
+</div>
+<div class="flex gap-sm">
+<div class="relative group">
+<span class="absolute inset-y-0 left-0 pl-sm flex items-center text-outline">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="pl-[40px] pr-sm py-base bg-surface-container-low border border-outline-variant rounded-xl focus:border-primary focus:ring-1 focus:ring-primary/10 outline-none font-body-md text-body-md transition-all w-full md:w-[240px]" placeholder="기록 검색" type="text"/>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default if content exists, shown here for the task) -->
+<section class="hidden flex flex-col items-center justify-center py-[120px] text-center" id="empty-state">
+<div class="w-[200px] h-[200px] mb-md bg-surface-container rounded-full flex items-center justify-center">
+<img alt="Empty state illustration" class="w-[120px] h-[120px] object-contain opacity-40 grayscale" data-alt="A minimal and elegant digital illustration of a single tarot card floating in a vast white space. The style is clean and contemporary, utilizing soft blue and grey shadows to create a sense of calm and emptiness. High-key lighting highlights the refined textures of the paper-like surface, emphasizing the reflective clarity of the brand aesthetic. Professional editorial quality with intentional whitespace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_f-946EML_NLjRufeHpm92js-Uz1RYktdlY1Y8ftkR1zlnnM3GNIqnSuNqp-44SdWigC0dZCOo9thyUJFhXpY7q3wK60KzFIVkre6HzORQWxaj6TuDazu63hg89zTzdpqfJeg57sQMUGKPuzb2vYoNhcfolj3PJ4_U7hscfK07ODHRUXDbmIvAcm6ZKwwBfIEwlH247iWboIbLQfGAI7mgrqYWjoJfGUV78K9LxlrLu_YmZ-1yEnT1ws_2x4bfH2u9NrSR-WUQsL_"/>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-sm">첫 기록을 남겨볼까요?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-[320px]">오늘 당신의 하루는 어떤 의미였나요? 타로 카드 한 장으로 마음을 정리해보세요.</p>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-xl font-headline-sm text-headline-sm shadow-sm active:scale-95 transition-transform">
+                새 기록 시작하기
+            </button>
+</section>
+<!-- Entry Grid -->
+<section class="gap-md flex flex-col" id="record-grid"><div class="flex flex-col gap-sm w-full">
+<!-- Record Item 1 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-base md:gap-lg flex-grow">
+<span class="font-label-md text-secondary whitespace-nowrap">2024.05.20</span>
+<div class="flex flex-col gap-xs flex-grow">
+<h3 class="font-headline-sm text-on-surface truncate max-w-[300px] md:max-w-[500px]">새로운 프로젝트를 시작하기 앞서 마음가짐은?</h3>
+<div class="flex gap-xs">
+<span class="px-xs py-[2px] bg-secondary-container text-on-secondary-container rounded text-[10px] font-medium">The Fool</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md">
+<span class="hidden md:inline">상세보기</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Record Item 2 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-base md:gap-lg flex-grow">
+<span class="font-label-md text-secondary whitespace-nowrap">2024.05.18</span>
+<div class="flex flex-col gap-xs flex-grow">
+<h3 class="font-headline-sm text-on-surface truncate max-w-[300px] md:max-w-[500px]">내면의 소리에 집중하기 위한 조언</h3>
+<div class="flex gap-xs">
+<span class="px-xs py-[2px] bg-secondary-container text-on-secondary-container rounded text-[10px] font-medium">The High Priestess</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md">
+<span class="hidden md:inline">상세보기</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Record Item 3 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-base md:gap-lg flex-grow">
+<span class="font-label-md text-secondary whitespace-nowrap">2024.05.15</span>
+<div class="flex flex-col gap-xs flex-grow">
+<h3 class="font-headline-sm text-on-surface truncate max-w-[300px] md:max-w-[500px]">인간관계에서의 균형을 찾는 법</h3>
+<div class="flex gap-xs">
+<span class="px-xs py-[2px] bg-secondary-container text-on-secondary-container rounded text-[10px] font-medium">The Lovers</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md">
+<span class="hidden md:inline">상세보기</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Record Item 4 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-base md:gap-lg flex-grow">
+<span class="font-label-md text-secondary whitespace-nowrap">2024.05.12</span>
+<div class="flex flex-col gap-xs flex-grow">
+<h3 class="font-headline-sm text-on-surface truncate max-w-[300px] md:max-w-[500px]">긍정적인 에너지를 유지하는 방법은?</h3>
+<div class="flex gap-xs">
+<span class="px-xs py-[2px] bg-secondary-container text-on-secondary-container rounded text-[10px] font-medium">The Sun</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md">
+<span class="hidden md:inline">상세보기</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div></section>
+<!-- Pagination / Load More -->
+<div class="mt-xl flex justify-center">
+<button class="flex items-center gap-xs font-label-md text-label-md text-secondary hover:text-primary transition-colors py-base px-md border border-outline-variant rounded-full bg-surface-container-low active:scale-95">
+<span>더 많은 기록 불러오기</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface dark:bg-surface border-t border-outline-variant dark:border-outline w-full py-lg mt-auto">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter flex flex-col md:flex-row justify-between items-center gap-base">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-on-surface">타로 노트</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 타로 노트. Reflective Clarity for Mindful Living.</p>
+</div>
+<div class="flex gap-md">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200" href="#">개인정보처리방침</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200" href="#">이용약관</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200" href="#">피드백 보내기</a>
+</div>
+</div>
+</footer>
+<!-- FAB for Mobile -->
+<button class="md:hidden fixed bottom-gutter right-margin-mobile w-[56px] h-[56px] bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center z-40 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+<script>
+        // Example logic to toggle empty state for demonstration
+        function toggleEmptyState(isEmpty) {
+            const grid = document.getElementById('record-grid');
+            const empty = document.getElementById('empty-state');
+            if (isEmpty) {
+                grid.classList.add('hidden');
+                empty.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                empty.classList.add('hidden');
+            }
+        }
+        
+        // Initial state is not empty as per task requirements for showing the grid
+        // Set to true to see empty state: toggleEmptyState(true);
+    </script>
+</body></html>
