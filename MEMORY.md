@@ -10,3 +10,9 @@
 ### 2026-05-30 이어가기
 - 멈췄던 곳: 기획 완료, Stitch zip 파일 수령
 - 다음에 할 것: 연결 (GitHub · Vercel · Supabase)
+
+## 연결 (2026-05-30)
+**무엇을:** Next.js 스캐폴드 + shadcn/ui(base-nova) + Supabase + Vercel 배포까지 연결.
+**왜 이렇게:** 구현 전에 배포 환경을 먼저 잡아 git push → 자동배포 루프를 만든다.
+**막힌 점:** 기존 Supabase 무료 프로젝트 2개 한도 초과 → 새 계정으로 해결. shadcn base-nova 스타일이 @base-ui/react 등 추가 패키지 필요 — 수동 설치로 해결.
+**라이브:** https://tarot-note.vercel.app (git push 시 자동배포)
