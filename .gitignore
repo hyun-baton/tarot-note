@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 supabase/.temp/
+
+# Stitch 디자인 원본 (로컬 참고용)
+stitch_personal_tarot_journal.zip

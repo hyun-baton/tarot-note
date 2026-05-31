@@ -2,15 +2,21 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { supabase } from "@/lib/supabase"
+import { CARD_BY_NAME } from "@/lib/cards"
 import { Reading, Review } from "@/lib/types"
 import { ReviewForm } from "./review-form"
+import { DeleteButton } from "./delete-button"
 
 export const revalidate = 0
+
+function formatDate(dateStr: string) {
+  return dateStr.replace(/-/g, ".")
+}
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
 
-  const [{ data: reading, error: rErr }, { data: reviews, error: revErr }] = await Promise.all([
+  const [{ data: reading, error: rErr }, { data: reviews }] = await Promise.all([
     supabase.from("readings").select("*").eq("id", id).single(),
     supabase.from("reviews").select("*").eq("reading_id", id).order("reviewed_at", { ascending: true }),
   ])
@@ -19,73 +25,88 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   const r = reading as Reading
   const revList = (reviews as Review[]) ?? []
+  const cardImageUrl = CARD_BY_NAME[r.card_name.split(" / ")[0]]?.imageUrl ?? r.card_image_url
 
   return (
     <div>
-      {/* 뒤로가기 */}
-      <Link href="/" className="mb-4 inline-block text-sm text-muted-foreground hover:text-foreground">
-        ← 목록으로
-      </Link>
+      {/* 헤더 */}
+      <div className="mb-6 flex items-center justify-between">
+        <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          ← 성찰 기록
+        </Link>
+        <DeleteButton readingId={id} />
+      </div>
 
-      {/* 카드 이미지 (1순위) */}
-      <div className="relative mx-auto mb-5 h-72 w-48">
-        {r.card_image_url ? (
-          <Image
-            src={r.card_image_url}
-            alt={r.card_name}
-            fill
-            className="rounded-xl object-cover shadow-md"
-            sizes="192px"
-            unoptimized
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center rounded-xl bg-muted text-sm text-muted-foreground">
-            이미지 없음
+      {/* 2단 레이아웃 */}
+      <div className="md:flex md:gap-10 md:items-start">
+
+        {/* 왼쪽: 카드 이미지 + 이름 */}
+        <div className="mb-6 md:mb-0 md:w-48 md:shrink-0">
+          <div className="relative mx-auto aspect-[2/3] w-48 md:w-full overflow-hidden rounded-xl shadow-md">
+            {cardImageUrl ? (
+              <Image
+                src={cardImageUrl}
+                alt={r.card_name}
+                fill
+                className="object-cover scale-[1.08]"
+                sizes="(max-width: 768px) 192px, 200px"
+                unoptimized
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-muted text-sm text-muted-foreground">
+                이미지 없음
+              </div>
+            )}
           </div>
-        )}
+          <div className="mt-3 text-center md:text-left">
+            <p className="text-xs text-muted-foreground">{formatDate(r.reading_date)}</p>
+            <h1 className="mt-0.5 text-base font-bold text-foreground">{r.card_name}</h1>
+          </div>
+        </div>
+
+        {/* 오른쪽: 내용 */}
+        <div className="flex-1">
+          {/* 질문 / 상황 */}
+          {r.question && (
+            <section className="mb-4 rounded-xl border border-border bg-card p-4">
+              <p className="mb-2 text-sm font-semibold text-foreground">🔮 질문 / 상황</p>
+              <p className="whitespace-pre-wrap text-sm text-foreground/80">{r.question}</p>
+            </section>
+          )}
+
+          {/* 해석 및 메모 */}
+          {r.interpretation && (
+            <section className="mb-4 rounded-xl border border-border bg-card p-4">
+              <p className="mb-2 text-sm font-semibold text-foreground">📖 해석 및 메모</p>
+              <p className="whitespace-pre-wrap text-sm text-foreground/80">{r.interpretation}</p>
+            </section>
+          )}
+
+          {/* 리뷰 */}
+          <section className="rounded-xl border border-border bg-card p-4">
+            <p className="mb-3 text-sm font-semibold text-foreground">💬 리뷰</p>
+
+            {revList.length === 0 ? (
+              <p className="mb-3 text-sm text-muted-foreground">
+                지금 되돌아보고 코멘트를 남겨보세요.
+              </p>
+            ) : (
+              <ul className="mb-4 space-y-3">
+                {revList.map((rev) => (
+                  <li key={rev.id} className="rounded-lg bg-muted/60 p-3">
+                    <p className="whitespace-pre-wrap text-sm text-foreground">{rev.review_text}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {new Date(rev.reviewed_at).toLocaleDateString("ko-KR")}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <ReviewForm readingId={id} />
+          </section>
+        </div>
       </div>
-
-      {/* 카드 이름 + 날짜 */}
-      <div className="mb-5 text-center">
-        <h1 className="text-xl font-bold">{r.card_name}</h1>
-        <p className="text-sm text-muted-foreground">{r.reading_date}</p>
-      </div>
-
-      {/* 질문 */}
-      {r.question && (
-        <section className="mb-4 rounded-xl border border-border bg-card p-4">
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">질문 / 상황</p>
-          <p className="whitespace-pre-wrap text-sm text-foreground">{r.question}</p>
-        </section>
-      )}
-
-      {/* 해석 */}
-      {r.interpretation && (
-        <section className="mb-6 rounded-xl border border-border bg-card p-4">
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">해석 / 메모</p>
-          <p className="whitespace-pre-wrap text-sm text-foreground">{r.interpretation}</p>
-        </section>
-      )}
-
-      {/* 리뷰 */}
-      <section className="border-t border-border pt-5">
-        <h2 className="mb-3 text-sm font-semibold">리뷰</h2>
-        {revList.length === 0 ? (
-          <p className="mb-3 text-sm text-muted-foreground">지금 되돌아보고 코멘트를 남겨보세요.</p>
-        ) : (
-          <ul className="mb-4 space-y-3">
-            {revList.map((rev) => (
-              <li key={rev.id} className="rounded-xl border border-border bg-card p-3">
-                <p className="whitespace-pre-wrap text-sm text-foreground">{rev.review_text}</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {new Date(rev.reviewed_at).toLocaleDateString("ko-KR")}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-        <ReviewForm readingId={id} />
-      </section>
     </div>
   )
 }

@@ -22,3 +22,14 @@
 **카드 이미지:** sacred-texts.com Rider-Waite 덱 URL 사용 (퍼블릭 도메인).
 **핵심 결정:** shadcn base-nova 스타일이 `asChild` prop 미지원 → Link에 직접 Tailwind 클래스 적용.
 **막힌 점:** Supabase 새 계정 로그인 필요(기존 계정 무료 한도 초과). @base-ui/react 등 누락 패키지 수동 설치.
+
+### 2026-05-30 보안 점검
+- 결과: 5건 모두 통과 (CRITICAL 없음)
+- 점검 항목: .env git 커밋 여부, NEXT_PUBLIC 키 노출, 하드코딩 비밀 키, service_role 클라이언트 사용, RLS 활성화
+- 남은 위험: 없음
+
+## 메뉴 개편 + 카드 이미지 교체 (2026-05-31)
+**무엇을:** 도감·달력 페이지 삭제, 달력을 모아보기(`/`)에 통합(기록 있는 날 카드 썸네일 표시·오늘 강조). 새 기록은 카드 이미지 그리드 → 이름 검색란으로. 카드 이미지를 Smith-Waite 보더리스(yunruse/tarot color1910)로 통일.
+**왜 이렇게:** 화면 수를 줄여 단순화(나 혼자 쓰는 도구). 검색이 78장 그리드보다 빠름. 보더리스가 사용자 실물 카드와 가까움.
+**핵심 결정:** 기존 DB의 옛 이미지 URL 대신 `CARD_BY_NAME[card_name]`로 최신 이미지를 조회(기록 이름→이미지 매핑). 흰 테두리는 `scale-[1.08]`로 잘라 보더리스 표현. 사진 업로드→AI 인식(방식 2)은 LLM API 불필요 원칙·범위 고려해 보류, 검색(방식 1) 유지로 결정.
+**막힌 점:** Tailwind v4에서 `grid-cols-[200px,1fr]` 파싱 깨짐 → flex로 해결. next.config에 media.githubusercontent.com 이미지 도메인 추가 필요.

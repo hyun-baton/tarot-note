@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="ko" className={`${notoSansKr.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
           <Nav />
-          <div className="mx-auto w-full max-w-2xl flex-1 px-4 py-6">{children}</div>
+          <div className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">{children}</div>
         </body>
     </html>
   );
